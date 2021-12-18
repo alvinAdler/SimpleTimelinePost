@@ -4,6 +4,8 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 
+const userRoutes = require("./routes/userRoutes")
+
 const app = express()
 
 app.use(cors())
@@ -14,6 +16,8 @@ const db = mongoose.connection
 
 db.on("error", (err) => console.log(err))
 db.once("open", () => console.log("Connected to Database"))
+
+app.use("/user", userRoutes)
 
 app.listen("5000", () => {
     console.log("Server Started")
