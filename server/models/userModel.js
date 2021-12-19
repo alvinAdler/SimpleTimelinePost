@@ -14,6 +14,11 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    friendsList: {
+        type: [mongoose.ObjectId],
+        required: true,
+        default: []
     }
 })
 
