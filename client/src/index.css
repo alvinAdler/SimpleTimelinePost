@@ -5,8 +5,34 @@
   --color-accent: #DA0037;
 }
 
-*, *::before, *::after{
+html *, html *::before, html *::after{
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
+
+html, body, .App, #root{
+  margin: 0;
+  padding: 0;
+  height: max-content;
+  min-height: 100vh;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+/* html{
+  border: 3px solid red;
+}
+
+body{
+  border: 3px solid blue;
+}
+
+.App{
+  border: 3px solid green;
+}
+
+#root{
+  border: 3px solid yellow;
+} */

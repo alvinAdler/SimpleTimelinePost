@@ -1,0 +1,7 @@
+.jumbotron_container{
+    background-color: var(--color-sub);
+    border-radius: 1rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    margin: 0.5rem;
+}

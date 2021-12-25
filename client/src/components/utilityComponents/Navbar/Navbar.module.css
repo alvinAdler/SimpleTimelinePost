@@ -1,0 +1,13 @@
+.nav_container{
+    background-color: var(--color-sub);
+    height: 3rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 0 10%;
+    gap: 0 2%;
+}
+
+.nav_container span:last-child{
+    margin-left: auto;
+}
