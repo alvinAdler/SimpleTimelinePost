@@ -6,13 +6,13 @@ import styles from './Navbar.module.css'
 const Navbar = () => {
     return (
         <>
-        <nav className={styles.nav_container}>
-            <span>Timeline</span>
-            <span>Friends</span>
-            <span>Logout</span>
-            <span>UserName</span>
-        </nav>
-        <Outlet/>
+            <nav className={styles.nav_container}>
+                <span>Timeline</span>
+                <span>Friends</span>
+                <span>Logout</span>
+                <span>UserName</span>
+            </nav>
+            <Outlet/>
         </>
     )
 }

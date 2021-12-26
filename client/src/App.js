@@ -15,7 +15,7 @@ function App() {
 			<Router>
                 <Routes>
                     <Route path="/login" element={<LoginPage/>}/>
-                    <Route path="/register" element={<RegisterPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/>s
 
                     <Route path="/" element={<Navbar/>}>
                         <Route index element={<TimelinesPage/>}/>
