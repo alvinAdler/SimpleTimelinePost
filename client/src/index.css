@@ -22,6 +22,14 @@ html, body, .App, #root{
   color: var(--color-secondary);
 }
 
+p, h4, a{
+  font-size: 1rem;
+}
+
+.text-emphasize{
+  color: var(--color-accent);
+}
+
 /* html{
   border: 3px solid red;
 }
