@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     column-gap: 10%;
+    padding: 10px;
     /* border: 3px solid purple; */
 }
 
@@ -39,6 +40,7 @@
     justify-content: center;
     align-items: stretch;
     padding: 3rem;
+    z-index: 1;
 }
 
 .loginForm > *{
@@ -52,6 +54,7 @@
 
 .loginFormInputs{
     color: var(--color-secondary);
+    width: 100%;
     padding: 0.3rem 0;
     background: none;
     border: none;
@@ -62,6 +65,10 @@
 
 .loginFormInputs:focus{
     border-bottom-color: var(--color-accent);
+}
+
+.loginFormInputs::placeholder{
+    color: var(--color-secondary);
 }
 
 .loginSubmitButton{
@@ -100,4 +107,37 @@
 .registrationLink a:focus{
     outline: none;
     background-color: var(--color-accent);
+}
+
+@media screen and (max-width: 768px) {
+    .loginPage_container{
+        flex-flow: column wrap;
+        row-gap: 1rem;
+    }
+
+    .loginPage_container > *{
+        flex-basis: 0;
+    }
+
+    .welcomingBanner > h1{
+        font-size: 3.5rem
+    }
+
+    .imageBanner{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        opacity: 0.5;
+        width: clamp(30rem, 60%, 60%);
+    }
+
+    .loginForm{
+        background-color: var(--color-st-secondary);
+    }
+
+    .loginForm > h2{
+        font-size: 2.5rem;
+    }
 }
