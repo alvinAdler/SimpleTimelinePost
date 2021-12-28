@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     column-gap: 10%;
+    padding: 10px;
 }
 
 .registerForm{
@@ -15,8 +16,8 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    align-items: stretch;
-    padding: 3rem;
+    align-items: center;
+    padding: 3%;
     column-gap: 0.5rem;
 }
 
@@ -27,6 +28,7 @@
 .registerForm > h2{
     font-size: 3.5rem;
     font-weight: 400;
+    text-align: center;
 }
 
 .registerFormInputs{
@@ -85,9 +87,52 @@
     font-size: 4.5rem;
     font-weight: 400;
     text-align: center;
+    text-align: center;
 }
 
 .imageBanner{
     width: clamp(20rem, 40%, 100%);
-    /* border: 3px solid green; */
+}
+
+@media screen and (max-width: 768px) {
+    .registerPageContainer{
+        flex-flow: column wrap;
+        row-gap: 1rem;
+    }
+
+    .registerPageContainer > *,
+    .registerFormInputs:nth-child(3),
+    .registerFormInputs:nth-child(4){
+        flex-basis: 0;
+    }
+
+    .registerForm{
+        background-color: var(--color-st-secondary);
+        flex-flow: column wrap;
+        order: 2;
+        width: 80%;
+        z-index: 1;
+    }
+
+    .registerForm > h2{
+        font-size: 2.5rem;
+    }
+
+    .welcomingBanner{
+        order: 1;
+    }
+
+    .welcomingBanner > h1{
+        font-size: 3.5rem;
+    }
+
+    .imageBanner{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        opacity: 0.5;
+        width: clamp(20rem, 50%, 60%);
+    }
 }

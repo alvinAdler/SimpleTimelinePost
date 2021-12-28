@@ -39,7 +39,7 @@
     flex-flow: column wrap;
     justify-content: center;
     align-items: stretch;
-    padding: 3rem;
+    padding: 3%;
     z-index: 1;
 }
 
