@@ -30,7 +30,7 @@
 }
 
 .loginForm{
-    flex-basis: 25%;
+    flex-basis: 30%;
     background-color: var(--color-sub);
     border-radius: 15px;
     text-align: center;
@@ -51,6 +51,7 @@
 }
 
 .loginFormInputs{
+    color: var(--color-secondary);
     padding: 0.3rem 0;
     background: none;
     border: none;

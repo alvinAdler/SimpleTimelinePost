@@ -1,0 +1,93 @@
+.registerPageContainer{
+    height: 100vh;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10%;
+}
+
+.registerForm{
+    flex-basis: 30%;
+    background-color: var(--color-sub);
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 3rem;
+    column-gap: 0.5rem;
+}
+
+.registerForm > *{
+    margin: 0.8rem 0;
+}
+
+.registerForm > h2{
+    font-size: 3.5rem;
+    font-weight: 400;
+}
+
+.registerFormInputs{
+    color: var(--color-secondary);
+    flex-grow: 1;
+    width: 100%;
+    padding: 0.3rem 0;
+    background: none;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid var(--color-secondary);
+    transition: border 150ms ease-in-out;
+}
+
+.registerFormInputs:nth-child(3),
+.registerFormInputs:nth-child(4){
+    flex-basis: 40%;
+}
+
+.registerFormInputs:focus{
+    border-bottom-color: var(--color-accent);
+}
+
+.registerSubmitButton{
+    margin-top: 3rem;
+    background-color: var(--color-secondary);
+    color: var(--color-accent);
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem 1rem;
+    width: clamp(8rem, 20%, 20%);
+    align-self: center;
+    transition: background-color 150ms ease-in-out,
+                color 150ms ease-in-out;
+}
+
+.registerSubmitButton:hover, 
+.registerSubmitButton:focus{
+    outline: none;
+    background-color: var(--color-accent);
+    color: var(--color-secondary);
+}
+
+
+.welcomingBanner{
+    flex-basis: 40%;
+    /* border: 3px solid red; */
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1rem;
+}
+
+.welcomingBanner > h1{
+    font-size: 4.5rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+.imageBanner{
+    width: clamp(20rem, 40%, 100%);
+    /* border: 3px solid green; */
+}
