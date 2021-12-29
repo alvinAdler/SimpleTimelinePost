@@ -1,4 +1,10 @@
 :root{
+
+  --color-primary: #2285E4;
+  --color-success: #22e446;
+  --color-danger: #EB4034;
+  --color-warning: #E4DE22;
+
   --color-primary: #171717;
   --color-secondary: #EDEDED;
   --color-sub: #444444;

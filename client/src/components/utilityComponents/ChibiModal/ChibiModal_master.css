@@ -1,0 +1,9 @@
+.chibi-modal-container{
+    border: 3px solid red;
+    position: fixed;
+    z-index: 101;
+}
+
+.hide-modal{
+    display: none;
+}
