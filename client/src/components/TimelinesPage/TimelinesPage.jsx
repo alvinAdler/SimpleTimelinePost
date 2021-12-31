@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import swal from 'sweetalert2'
 
 import styles from "./TimelinesPage_master.module.css"
 
@@ -13,12 +14,15 @@ const TimelinesPage = () => {
         <div>
             <PlaceholderJumbotron title="Timelines Page"/>
             <button className="btn btn-primary" onClick={() => setShowModal(!showModal)}>Sample Modal</button>
-            <button className="btn btn-danger" onClick={() => console.log("test")}>Test</button>
+            <button className="btn btn-success" onClick={() => console.log(swal.fire)}>Print Swal</button>
 
             <ChibiModal 
             showModal={showModal}
+            onHide = {() => setShowModal(!showModal)}
+            onConfirm={() => console.log("Something")}
             headerText="Hello World"
             bodyText="Lorem ipsum dolor sit amet adipisincing dolor ela borat"
+            showCancelButton={true}
             />
         </div>
     )

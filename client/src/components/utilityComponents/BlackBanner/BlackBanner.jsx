@@ -2,9 +2,9 @@ import React from 'react'
 
 import './BlackBanner_master.css'
 
-const BlackBanner = ({isVisible}) => {
+const BlackBanner = ({isVisible, ...rest}) => {
     return (
-        <div className={`${!isVisible && "hide-black-banner"} black-banner-container`}></div>
+        <div className={`${!isVisible && "hide-black-banner"} black-banner-container`} {...rest}></div>
     )
 }
 
