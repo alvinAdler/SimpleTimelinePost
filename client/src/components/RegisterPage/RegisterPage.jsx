@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import swal from 'sweetalert2'
 
 import "./RegisterPage_master.css"
 
@@ -16,11 +17,21 @@ const RegisterPage = () => {
         ev.preventDefault()
 
         if(Object.values(userRegData).includes("")){
-            alert("Please fill all field")
+            swal.fire({
+                icon: "error",
+                title: "A field is empty!",
+                text: "Please fill out all input fields",
+                confirmButtonColor: "#2285e4"
+            })
             return
         }
         else if(userRegData.password !== userRegData.confirmPassword){
-            alert("Password does not match. Password and confirm password must match")
+            swal.fire({
+                icon: "error",
+                title: "Password confirmation mismatch!",
+                text: "Please match the password in the \"Password\" field and the \"Confirm Password\" field",
+                confirmButtonColor: "#2285e4"
+            })
             return
         }
 
