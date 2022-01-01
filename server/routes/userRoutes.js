@@ -1,12 +1,19 @@
 const express = require("express")
+const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const router = express.Router()
 
 const userModel = require("../models/userModel")
+const tokenVerification = require("../middlewares/tokenVerification")
 
-router.get("/all", (req, res) => {
+router.get("/all", tokenVerification, async (req, res) => {
+
+    console.log(req.user)
+    const allUsers = await userModel.find()
+
     return res.status(200).json({
-        message: "Request has been made"
+        message: "Request has been made",
+        users: allUsers
     })
 })
 
@@ -57,8 +64,17 @@ router.post("/login", async (req, res) => {
         })
     }
 
+    const token = jwt.sign({
+        _id: fetchedUser._id,
+        username: fetchedUser.username
+    }, 
+    process.env.AUTH_TOKEN_KEY, 
+    {expiresIn: "10m"})
+
     return res.status(200).json({
-        message: "Access granted."
+        message: "Access granted",
+        user: fetchedUser.username,
+        token: token
     })
 })
 

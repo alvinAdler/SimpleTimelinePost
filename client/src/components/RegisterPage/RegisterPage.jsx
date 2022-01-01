@@ -37,7 +37,7 @@ const RegisterPage = () => {
 
         customAxios({
             method: "POST",
-            url: "/user/register",
+            url: "/users/register",
             headers: {
                 "Content-type": "application/json"
             },

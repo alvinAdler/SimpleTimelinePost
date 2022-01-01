@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert2'
+import customAxios from '../utilities/customAxios'
 
 import'./LoginPage_master.css'
 
@@ -25,6 +26,25 @@ const LoginPage = () => {
 
             return
         }
+
+        customAxios({
+            method: "POST",
+            url: "/users/login",
+            headers: {
+                "Content-type": "application/json"
+            },
+            data: {
+                ...userLoginData
+            }
+        })
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => {
+            if(err.response){
+                console.log(err.response.data.message)
+            }
+        })
     }
 
     return (
