@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from "./FriendsPage_master.module.css"
+import "./FriendsPage_master.css"
 
 import PlaceholderJumbotron from '../utilityComponents/PlaceholderJumbotron/PlaceholderJumbotron'
 

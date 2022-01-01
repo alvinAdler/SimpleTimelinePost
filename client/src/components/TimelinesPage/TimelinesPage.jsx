@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import swal from 'sweetalert2'
 
-import styles from "./TimelinesPage_master.module.css"
+import "./TimelinesPage_master.css"
 
 import PlaceholderJumbotron from '../utilityComponents/PlaceholderJumbotron/PlaceholderJumbotron'
 import ChibiModal from '../utilityComponents/ChibiModal/ChibiModal'
