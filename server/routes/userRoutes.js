@@ -4,7 +4,16 @@ const bcrypt = require("bcrypt")
 const router = express.Router()
 
 const userModel = require("../models/userModel")
+const refreshTokenModel = require("../models/refreshTokenModel")
 const tokenVerification = require("../middlewares/tokenVerification")
+
+const pushRefreshToken = async (refreshToken) => {
+    const result = await refreshTokenModel.create({refreshToken: refreshToken})
+    if(result){
+        return true
+    }
+    return false
+}
 
 router.get("/all", tokenVerification, async (req, res) => {
 
@@ -71,11 +80,25 @@ router.post("/login", async (req, res) => {
     process.env.AUTH_TOKEN_KEY, 
     {expiresIn: "10m"})
 
-    return res.status(200).json({
-        message: "Access granted",
-        user: fetchedUser.username,
-        token: token
-    })
+    const refreshToken = jwt.sign({
+        _id: fetchedUser._id,
+        username: fetchedUser.username
+    }, process.env.REFRESH_TOKEN_KEY)
+
+    const isPushed = await pushRefreshToken(refreshToken)
+
+    if(isPushed){
+        return res.status(200).json({
+            message: "Access granted",
+            user: fetchedUser.username,
+            token: token,
+            refreshToken: refreshToken
+        })
+    }else{
+        return res.status(500).json({
+            message: "Refresh token failed to be pushed"
+        })
+    }
 })
 
 module.exports = router
