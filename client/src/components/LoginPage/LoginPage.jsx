@@ -1,9 +1,12 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import swal from 'sweetalert2'
+import Cookies from 'js-cookie'
 import customAxios from '../utilities/customAxios'
 
 import'./LoginPage_master.css'
+
+import AuthContext from '../utilityComponents/contexts/AuthContext'
 
 const LoginPage = () => {
 
@@ -11,6 +14,9 @@ const LoginPage = () => {
         username: "",
         password: ""
     })
+
+    const authContext = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleLoginSubmit = (ev) => {
         ev.preventDefault()
@@ -39,6 +45,11 @@ const LoginPage = () => {
         })
         .then((res) => {
             console.log(res.data)
+            Cookies.set("authToken", res.data.token)
+            Cookies.set("refreshToken", res.data.refreshToken)
+
+            authContext.setIsAuth(true)
+            navigate("/")
         })
         .catch((err) => {
             if(err.response){

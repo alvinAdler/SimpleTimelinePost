@@ -78,7 +78,7 @@ router.post("/login", async (req, res) => {
         username: fetchedUser.username
     }, 
     process.env.AUTH_TOKEN_KEY, 
-    {expiresIn: "10m"})
+    {expiresIn: "20m"})
 
     const refreshToken = jwt.sign({
         _id: fetchedUser._id,
@@ -99,6 +99,12 @@ router.post("/login", async (req, res) => {
             message: "Refresh token failed to be pushed"
         })
     }
+})
+
+router.post("/verify", tokenVerification, (req, res) => {
+    return res.status(200).json({
+        message: "You are verified"
+    })
 })
 
 module.exports = router

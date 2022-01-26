@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom';
 
 import "./App.css";
 
@@ -7,22 +8,33 @@ import TimelinesPage from './components/TimelinesPage/TimelinesPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import FriendsPage from './components/FriendsPage/FriendsPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
+import AuthContext from './components/utilityComponents/contexts/AuthContext';
+import RequireAuth from './components/utilityComponents/RequireAuth';
 
 
 function App() {
+
+    const [isAuth, setIsAuth] = useState(false)
+
     return (
         <div className="App">
-			<Router>
+            <AuthContext.Provider value={{isAuth, setIsAuth}}>
                 <Routes>
-                    <Route path="/login" element={<LoginPage/>}/>
-                    <Route path="/register" element={<RegisterPage/>}/>s
+                    {/* <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/> */}
+
+                    <Route path="/login" element={<RequireAuth><LoginPage/></RequireAuth>}/>
+                    <Route path="/register" element={<RequireAuth><RegisterPage/></RequireAuth>}/>
 
                     <Route path="/" element={<Navbar/>}>
-                        <Route index element={<TimelinesPage/>}/>
-                        <Route path="/friends" element={<FriendsPage/>}/>
+                        <Route index element={<RequireAuth><TimelinesPage/></RequireAuth>}/>
+                        <Route path="/friends" element={<RequireAuth><FriendsPage/></RequireAuth>}/>
+
+                        {/* <Route index element={<TimelinesPage/>}/>
+                        <Route path="/friends" element={<FriendsPage/>}/> */}
                     </Route>
                 </Routes>
-            </Router>
+            </AuthContext.Provider>
         </div>
     );
 }
