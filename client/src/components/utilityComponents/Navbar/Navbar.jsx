@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom'
 
 import './Navbar.css'
 
+import { logout } from '../../utilities/utilityFunctions'
+
 const Navbar = () => {
 
     const location = useLocation()
@@ -12,7 +14,7 @@ const Navbar = () => {
             <nav className="nav_container">
                 <Link to="/" className={`nav-link ${location.pathname === "/" && "active"}`}>Timeline</Link>
                 <Link to="/friends" className={`nav-link ${location.pathname === "/friends" && "active"}`}>Friends</Link>
-                <button className='nav-link'>Logout</button>
+                <button className='nav-link' onClick={logout}>Logout</button>
                 <span>UserName</span>
             </nav>
             <Outlet/>
