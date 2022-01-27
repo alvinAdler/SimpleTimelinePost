@@ -28,7 +28,6 @@ const LoginPage = () => {
                 title: "A field is empty",
                 text: "Please fill out all input fields",
                 showCancelButton: true,
-                confirmButtonColor: "#2285e4",
                 customClass: {
                     popup: "swal-custom-popup",
                     icon: "swal-icon",
@@ -56,6 +55,7 @@ const LoginPage = () => {
             Cookies.set("refreshToken", res.data.refreshToken)
 
             authContext.setIsAuth(true)
+            authContext.setUser(res.data.user)
             navigate("/")
         })
         .catch((err) => {

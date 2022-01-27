@@ -15,10 +15,11 @@ import RequireAuth from './components/utilityComponents/RequireAuth';
 function App() {
 
     const [isAuth, setIsAuth] = useState(false)
+    const [user, setUser] = useState({});
 
     return (
         <div className="App">
-            <AuthContext.Provider value={{isAuth, setIsAuth}}>
+            <AuthContext.Provider value={{isAuth, setIsAuth, user, setUser}}>
                 <Routes>
                     {/* <Route path="/login" element={<LoginPage/>}/>
                     <Route path="/register" element={<RegisterPage/>}/> */}
@@ -33,6 +34,7 @@ function App() {
                         {/* <Route index element={<TimelinesPage/>}/>
                         <Route path="/friends" element={<FriendsPage/>}/> */}
                     </Route>
+
                 </Routes>
             </AuthContext.Provider>
         </div>

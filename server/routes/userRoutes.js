@@ -103,7 +103,8 @@ router.post("/login", async (req, res) => {
 
 router.post("/verify", tokenVerification, (req, res) => {
     return res.status(200).json({
-        message: "You are verified"
+        message: "You are verified",
+        user: req.user
     })
 })
 

@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import customAxios from '../utilities/customAxios'
 import Cookies from 'js-cookie'
 
 import PageSpinner from './PageSpinner/PageSpinner'
+import AuthContext from "./contexts/AuthContext"
 
 /**
  ** Component Controller Codes!
@@ -19,6 +20,7 @@ const RequireAuth = ({children}) => {
 
     const navigate = useNavigate()
     const location = useLocation()
+    const authContext = useContext(AuthContext)
 
     useEffect(() => {
         const onPageLoad = async () => {
@@ -45,11 +47,9 @@ const RequireAuth = ({children}) => {
 
                 // }, 5000)
 
-                console.log(result)
-
                 if(result.status === 200){
-                    // authContext.setIsAuth(result.status === 200)
-                    console.log(location.pathname)
+                    authContext.setUser(result.data.user)
+
                     if(REJECT_AFTER_AUTH.includes(location.pathname)){
                         console.log("I am here")
                         navigate(-1, {replace: true})
