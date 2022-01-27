@@ -109,6 +109,27 @@
     background-color: var(--color-accent);
 }
 
+.swal-custom-popup{
+    background-color: var(--color-sub);
+    color: var(--color-secondary);
+}
+
+.swal-icon{
+    background: none;
+}
+
+.swal-custom-confirm{
+    background-color: var(--color-secondary) !important;
+    color: var(--color-primary) !important;
+    border-radius: 0.5rem !important;
+}
+
+.swal-custom-cancel{
+    background-color: var(--color-danger) !important;
+    color: var(--color-secondary) !important;
+    border-radius: 0.5rem !important;
+}
+
 @media screen and (max-width: 768px) {
     .loginPage_container{
         flex-flow: column wrap;

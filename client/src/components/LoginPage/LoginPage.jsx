@@ -27,7 +27,14 @@ const LoginPage = () => {
                 icon: "error",
                 title: "A field is empty",
                 text: "Please fill out all input fields",
-                confirmButtonColor: "#2285e4"
+                showCancelButton: true,
+                confirmButtonColor: "#2285e4",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    icon: "swal-icon",
+                    confirmButton: "swal-custom-confirm",
+                    cancelButton: "swal-custom-cancel"
+                }
             })
 
             return
