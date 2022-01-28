@@ -2,14 +2,16 @@ import React from 'react'
 
 import './PostWriteBox_master.css'
 
+import BaseButton from '../Buttons/BaseButton/BaseButton'
+
 const PostWriteBox = () => {
   return(
       <div className="postwritebox-container">
           <h2>Heading</h2>
-          <hr/>
+          <hr className='postwritebox-separator'/>
           <div className="post-container">
-            <textarea></textarea>
-            <button className="btn-primary">Submit</button>
+            <textarea className="postwrite-textarea" placeholder="Type something..."/>
+            <BaseButton buttonText="Post" customClass="post-button"/>
           </div>
       </div>
   );

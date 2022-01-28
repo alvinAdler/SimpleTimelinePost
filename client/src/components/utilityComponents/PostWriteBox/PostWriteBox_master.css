@@ -1,16 +1,39 @@
 .postwritebox-container{
-    border: 3px solid red;
-    width: 70%;
+    width: 60%;
+    background-color: var(--color-sub);
 }
 
 .post-container{
-    border: 3px solid blue;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: stretch;
+    gap: 1rem 0;
 }
 
-.post-container > button{
+.postwritebox-container > h2,
+.post-container{
+    margin: 1rem 3rem;
+}
+
+.postwritebox-separator{
+    border: 2px solid var(--color-accent);
+}
+
+.postwrite-textarea{
+    height: 5rem;
+    border: 2px solid var(--color-secondary);
+    background: none;
+    color: var(--color-secondary);
+    padding: 0.5rem;
+    resize: vertical;
+}
+
+.postwrite-textarea::placeholder{
+    color: var(--color-secondary);
+}
+
+.post-button{
+    width: 10%;
     align-self: flex-end;
 }
