@@ -54,22 +54,8 @@
 
 .registerSubmitButton{
     margin-top: 3rem;
-    background-color: var(--color-secondary);
-    color: var(--color-accent);
-    border-radius: 5px;
-    border: none;
-    padding: 0.5rem 1rem;
     width: clamp(8rem, 20%, 20%);
     align-self: center;
-    transition: background-color 150ms ease-in-out,
-                color 150ms ease-in-out;
-}
-
-.registerSubmitButton:hover, 
-.registerSubmitButton:focus{
-    outline: none;
-    background-color: var(--color-accent);
-    color: var(--color-secondary);
 }
 
 

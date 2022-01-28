@@ -4,6 +4,7 @@ import swal from 'sweetalert2'
 import "./RegisterPage_master.css"
 
 import customAxios from '../utilities/customAxios'
+import BaseButton from '../utilityComponents/Buttons/BaseButton/BaseButton'
 
 const RegisterPage = () => {
 
@@ -70,7 +71,7 @@ const RegisterPage = () => {
                 <input className="registerFormInputs" type="password" placeholder="Confirm Password"
                 onChange={(ev) => setUserRegData({...userRegData, confirmPassword: ev.target.value})}
                 />
-                <button className="registerSubmitButton" type="submit">Register</button>
+                <BaseButton buttonText="Register" customClass="registerSubmitButton"/>
             </form>
             <div className="welcomingBanner">
                 <h1>Unite the <span className="text-emphasize">people</span></h1>

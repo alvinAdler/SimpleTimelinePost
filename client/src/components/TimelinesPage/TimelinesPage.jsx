@@ -1,12 +1,13 @@
 import "./TimelinesPage_master.css"
 
-import PlaceholderJumbotron from '../utilityComponents/PlaceholderJumbotron/PlaceholderJumbotron'
+import PostWriteBox from "../utilityComponents/PostWriteBox/PostWriteBox"
 
 const TimelinesPage = () => {
 
     return (
-        <div>
-            <PlaceholderJumbotron title="Timelines Page"/>
+        <div className="timelinespage-container">
+            <h1>What's on your mind?</h1>
+            <PostWriteBox/>
         </div>
     )
 }

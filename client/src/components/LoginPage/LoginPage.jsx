@@ -7,6 +7,7 @@ import customAxios from '../utilities/customAxios'
 import'./LoginPage_master.css'
 
 import AuthContext from '../utilityComponents/contexts/AuthContext'
+import BaseButton from '../utilityComponents/Buttons/BaseButton/BaseButton'
 
 const LoginPage = () => {
 
@@ -85,7 +86,7 @@ const LoginPage = () => {
                 placeholder="Password"
                 onChange={(ev) => setUserLoginData({...userLoginData, password: ev.target.value})}
                 />
-                <button className="loginSubmitButton" type="submit">Login</button>
+                <BaseButton buttonText="Login" customClass="loginSubmitButton"/>
                 <p className="registrationLink">Doesn't have an account? <Link to="/register">Register here</Link></p>
             </form>
         </div>

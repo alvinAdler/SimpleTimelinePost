@@ -1,0 +1,16 @@
+.base-button{
+    background-color: var(--color-secondary);
+    color: var(--color-accent);
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 150ms ease-in-out,
+                color 150ms ease-in-out;
+}
+
+.base-button:hover, 
+.base-button:focus{
+    outline: none;
+    background-color: var(--color-accent);
+    color: var(--color-secondary);
+}
