@@ -1,6 +1,7 @@
 .postwritebox-container{
-    width: 60%;
+    width: max(60%, 30rem);
     background-color: var(--color-sub);
+    padding: 0.5% 2%;
 }
 
 .post-container{
@@ -11,9 +12,23 @@
     gap: 1rem 0;
 }
 
-.postwritebox-container > h2,
+.postwritebox-title,
 .post-container{
-    margin: 1rem 3rem;
+    margin: 2% 0;
+}
+
+.postwritebox-title{
+    background: none;
+    border: none;
+    width: 50%;
+    /* border: 3px solid red; */
+    color: var(--color-secondary);
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    font-size: 1.5em;
+}
+
+.postwritebox-title:focus{
+    outline: 2px solid white;
 }
 
 .postwritebox-separator{
@@ -29,11 +44,22 @@
     resize: vertical;
 }
 
+.postwritebox-title::placeholder,
 .postwrite-textarea::placeholder{
     color: var(--color-secondary);
 }
 
+.postwrite-textarea:focus{
+    outline: 2px solid var(--color-accent);
+}
+
 .post-button{
-    width: 10%;
+    width: max(5rem, 10%);
     align-self: flex-end;
+}
+
+@media screen and (max-width: 768px) {
+    .postwritebox-title{
+        width: 100%;
+    }
 }
