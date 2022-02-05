@@ -1,0 +1,24 @@
+.postbox-container{
+    width: max(60%, 30rem);
+    background-color: var(--color-sub);
+    padding: 0.5% 2%;
+    margin-bottom: 4rem;
+}
+
+.postcontent-separator{
+    border: 2px solid var(--color-accent);
+}
+
+.post-username{
+    font-weight: bold;
+}
+
+.post-username, 
+.post-date{
+    margin: 0.25rem 0;
+}
+
+.post-title,
+.post-content{
+    margin: 1rem 0;
+}

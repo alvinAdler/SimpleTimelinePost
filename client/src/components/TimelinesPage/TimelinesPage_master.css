@@ -3,3 +3,7 @@
     flex-flow: column nowrap;
     align-items: center;
 }
+
+.timelinespage-container > h1{
+    margin: 2rem 0;
+}

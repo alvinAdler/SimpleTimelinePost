@@ -2,6 +2,7 @@
     width: max(60%, 30rem);
     background-color: var(--color-sub);
     padding: 0.5% 2%;
+    margin-bottom: 4rem;
 }
 
 .post-container{
@@ -23,7 +24,6 @@
     width: 50%;
     /* border: 3px solid red; */
     color: var(--color-secondary);
-    padding: 0.5rem 0.5rem 0.5rem 0;
     font-size: 1.5em;
 }
 
