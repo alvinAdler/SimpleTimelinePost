@@ -19,6 +19,12 @@ const userSchema = new Schema({
         type: [mongoose.ObjectId],
         required: true,
         default: []
+    },
+    posts: {
+        type: [mongoose.ObjectId],
+        required: true,
+        default: [],
+        ref: "posts"
     }
 })
 

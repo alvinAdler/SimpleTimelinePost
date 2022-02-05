@@ -5,6 +5,8 @@ const router = express.Router()
 
 const userModel = require("../models/userModel")
 const refreshTokenModel = require("../models/refreshTokenModel")
+const postModel = require("../models/postModel")
+
 const tokenVerification = require("../middlewares/tokenVerification")
 
 const pushRefreshToken = async (refreshToken) => {
@@ -14,17 +16,6 @@ const pushRefreshToken = async (refreshToken) => {
     }
     return false
 }
-
-router.get("/all", tokenVerification, async (req, res) => {
-
-    console.log(req.user)
-    const allUsers = await userModel.find()
-
-    return res.status(200).json({
-        message: "Request has been made",
-        users: allUsers
-    })
-})
 
 router.post("/register", async (req, res) => {
     const username = req.body.username
@@ -105,6 +96,50 @@ router.post("/verify", tokenVerification, (req, res) => {
     return res.status(200).json({
         message: "You are verified",
         user: req.user
+    })
+})
+
+router.get("/all", tokenVerification, async (req, res) => {
+
+    console.log(req.user)
+    const allUsers = await userModel.find()
+
+    return res.status(200).json({
+        message: "Request has been made",
+        users: allUsers
+    })
+})
+
+router.post("/addPost", tokenVerification, (req, res) => {
+    const postTitle = req.body.postTitle
+    const postContent = req.body.postContent
+
+    console.log("Req body")
+    console.log(req.body)
+    console.log(req.body.postTitle)
+    console.log(req.body.postContent)
+
+    postModel.create({postTitle: postTitle, postContent: postContent, postOwner: req.user._id}, async (err, doc) => {
+
+        if(err){
+            console.log(err)
+            return res.status(500).json({
+                message: "Internal Server Error"
+            })
+        }
+
+        const result = await userModel.updateOne({_id: req.user._id}, {$push: {posts: doc._id}})
+
+        if(result.acknowledged){
+            return res.status(200).json({
+                message: "Post has been successfully added",
+                doc: doc,
+            })
+        }
+        return res.status(500).json({
+            message: "Failed to save post"
+        })
+        
     })
 })
 
