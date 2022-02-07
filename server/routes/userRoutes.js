@@ -143,4 +143,25 @@ router.post("/addPost", tokenVerification, (req, res) => {
     })
 })
 
+router.get("/getPosts", tokenVerification, async (req, res) => {
+    let fetchedPosts = await postModel.find({postOwner: req.user._id})
+
+    if(!fetchedPosts){
+        return res.status(500).json({
+            message: "Error while fetching data"
+        })
+    }
+
+    let modifiedPosts = await Promise.all(fetchedPosts.map(async (item) => {
+        let user = await userModel.findOne({_id: item.postOwner}, {username: 1})
+
+        return {...item._doc, username: user.username}
+    }))
+
+    return res.status(200).json({
+        message: "Posts fetched",
+        posts: modifiedPosts
+    })
+})
+
 module.exports = router

@@ -38,3 +38,11 @@ export const logout = () => {
         }
     })
 }
+
+export const getDateObject = (isoString) => {
+    return new Date(isoString)
+}
+
+export const customDate = (dateObject) => {
+    return `${dateObject.toLocaleDateString("default", {month: "long"})} ${dateObject.getDate()}, ${dateObject.getFullYear()}`
+}

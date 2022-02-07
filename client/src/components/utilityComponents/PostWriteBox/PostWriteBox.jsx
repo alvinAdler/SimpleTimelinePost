@@ -30,46 +30,67 @@ const PostWriteBox = () => {
 			return
 		}
 
-		customAxios({
-			method: "POST",
-			url: "/users/addPost",
-			headers: {
-				"Content-type": "application/json",
-				"Authorization": `Bearer ${Cookies.get("authToken")}`
-			},
-			data: {
-				postTitle: postTitle,
-				postContent: postContent
+		swal.fire({
+			icon: "question",
+			title: "Confirmation",
+			text: "Are you sure to publish this post?",
+			showCancelButton: true,
+			customClass: {
+				popup: "swal-custom-popup",
+				icon: "swal-icon",
+				confirmButton: "swal-custom-confirm",
+				cancelButton: "swal-custom-cancel"
 			}
 		})
 		.then((res) => {
-			if(res.status === 200){
-				swal.fire({
-					icon: "success",
-					title: "Posted!",
-					text: "Your post will appear shortly",
-					customClass: {
-						popup: "swal-custom-popup",
-						icon: "swal-icon",
-						confirmButton: "swal-custom-confirm",
-						cancelButton: "swal-custom-cancel"
+			if(res.isConfirmed){
+
+				customAxios({
+					method: "POST",
+					url: "/users/addPost",
+					headers: {
+						"Content-type": "application/json",
+						"Authorization": `Bearer ${Cookies.get("authToken")}`
+					},
+					data: {
+						postTitle: postTitle,
+						postContent: postContent
 					}
 				})
+				.then((res) => {
+					if(res.status === 200){
+						swal.fire({
+							icon: "success",
+							title: "Posted!",
+							text: "Your post will appear shortly",
+							customClass: {
+								popup: "swal-custom-popup",
+								icon: "swal-icon",
+								confirmButton: "swal-custom-confirm",
+								cancelButton: "swal-custom-cancel"
+							}
+						})
+						.then(() => {
+							window.location.reload()
+						})
+					}
+				})
+				.catch((err) => {
+					console.log(err)
+					swal.fire({
+						icon: "error",
+						title: "Error!",
+						text: "Something went wrong while posting your post. Please try again later.",
+						customClass: {
+							popup: "swal-custom-popup",
+							icon: "swal-icon",
+							confirmButton: "swal-custom-confirm",
+							cancelButton: "swal-custom-cancel"
+						}
+					})
+				})
+
 			}
-		})
-		.catch((err) => {
-			console.log(err)
-			swal.fire({
-				icon: "error",
-				title: "Error!",
-				text: "Something went wrong while posting your post. Please try again later.",
-				customClass: {
-                    popup: "swal-custom-popup",
-                    icon: "swal-icon",
-                    confirmButton: "swal-custom-confirm",
-                    cancelButton: "swal-custom-cancel"
-                }
-			})
 		})
 	}
 

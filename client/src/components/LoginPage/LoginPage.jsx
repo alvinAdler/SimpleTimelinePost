@@ -57,10 +57,35 @@ const LoginPage = () => {
 
             authContext.setIsAuth(true)
             authContext.setUser(res.data.user)
-            navigate("/")
+
+            swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "You will be directed to the main menu.",
+                customClass: {
+                    popup: "swal-custom-popup",
+                    icon: "swal-icon",
+                    confirmButton: "swal-custom-confirm",
+                    cancelButton: "swal-custom-cancel"
+                }
+            })
+            .then(() => {
+                navigate("/")
+            })
         })
         .catch((err) => {
             if(err.response){
+                swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: "Login failed. Please try again",
+                    customClass: {
+                        popup: "swal-custom-popup",
+                        icon: "swal-icon",
+                        confirmButton: "swal-custom-confirm",
+                        cancelButton: "swal-custom-cancel"
+                    }
+                })
                 console.log(err.response.data.message)
             }
         })
