@@ -1,0 +1,12 @@
+.empty-banner-container{
+    background-color: var(--color-sub);
+    margin: 2rem 0;
+    text-align: center;
+    padding: 2rem 1rem;
+    width: 80%;
+}
+
+.empty-banner-title{
+    font-size: 2rem;
+    font-weight: 500;
+}
