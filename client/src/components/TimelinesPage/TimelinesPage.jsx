@@ -26,6 +26,7 @@ const TimelinesPage = () => {
         })
         .then((res) => {
             setPosts(res.data.posts)
+            console.log(res.data.posts)
         })
         .catch((err) => {
             console.log(err)

@@ -1,4 +1,7 @@
 .nav_container{
+    top: 0;
+    position: sticky;
+    width: 100%;
     background-color: var(--color-sub);
     height: 3rem;
     display: flex;
@@ -6,6 +9,7 @@
     align-items: center;
     padding: 0 10%;
     gap: 0 2%;
+    z-index: 500;
 }
 
 .nav_container span:last-child{

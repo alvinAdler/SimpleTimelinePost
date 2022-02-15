@@ -44,5 +44,5 @@ export const getDateObject = (isoString) => {
 }
 
 export const customDate = (dateObject) => {
-    return `${dateObject.toLocaleDateString("default", {month: "long"})} ${dateObject.getDate()}, ${dateObject.getFullYear()}`
+    return `${dateObject.toLocaleDateString("default", {month: "long"})} ${dateObject.getDate()}, ${dateObject.getFullYear()} - ${dateObject.getHours()}:${dateObject.getMinutes()}:${dateObject.getSeconds()}.UTC`
 }
