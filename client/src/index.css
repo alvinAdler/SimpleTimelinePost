@@ -11,6 +11,9 @@
   --color-accent: #DA0037;
 
   --color-st-secondary: #44444495
+
+  --size-main-container-max1: 60px;
+  --size-main-container-max2: 30px;
 }
 
 html *, html *::before, html *::after{

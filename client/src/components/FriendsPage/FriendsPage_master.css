@@ -1,0 +1,39 @@
+.friendspage-container{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.friendspage-container > *{
+    margin: 0.5rem 0;
+}
+
+.friendspage-container h2{
+    font-size: 2.5rem;
+    margin: 2.5rem 0;
+    font-weight: 400;
+    text-align: center;
+}
+
+.findfriends-input{
+    width: max(60%, 30rem);
+}
+
+.foundusers-container{
+    /* border: 3px solid red; */
+    width: max(60%, 30rem);
+    margin-top: 2.5rem;
+}
+
+.foundusers-container > p{
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.incoming-requests-container{
+    width: max(60%, 30rem);
+}
+
+.friends-list{
+    width: max(60%, 30rem);
+}

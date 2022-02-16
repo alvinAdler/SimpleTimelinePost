@@ -1,0 +1,26 @@
+.search-input-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    background-color: var(--color-sub);
+    padding-left: 1rem;
+}
+
+.search-input-container > input{
+    flex-basis: 90%;
+    color: var(--color-secondary);
+    padding: 0.3rem 0;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 1.25rem;
+    margin: 0.25rem 0;
+}
+
+.search-input-container > input::placeholder{
+    color: var(--color-secondary);
+}
+
+.search-input-container > button{
+    flex-basis: 10%;
+}

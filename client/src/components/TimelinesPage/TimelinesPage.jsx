@@ -35,7 +35,7 @@ const TimelinesPage = () => {
 
     return (
         <div className="timelinespage-container">
-            <h1>What's on your mind?</h1>
+            <h2>What's on your mind?</h2>
             <PostWriteBox/>
             {
                 posts.length > 0 ? 
