@@ -41,6 +41,10 @@ p, h4, a{
   color: var(--color-accent);
 }
 
+.container-width{
+  width: max(60%, 30rem);
+}
+
 /* html{
   border: 3px solid red;
 }
