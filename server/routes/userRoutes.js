@@ -110,6 +110,24 @@ router.get("/all", tokenVerification, async (req, res) => {
     })
 })
 
+router.get("/getUsers", tokenVerification, async (req, res) => {
+    const searchKeyword = req.body.searchKeyword
+
+    if(!searchKeyword){
+        return res.status(400).json({
+            message: "No keyword provided"
+        })
+    }
+
+    const regex = new RegExp(`${searchKeyword}`)
+    const matchingUsers = await userModel.find({username:  regex})
+
+    return res.status(200).json({
+        message: "success",
+        matchingUsers: matchingUsers
+    })
+})
+
 router.post("/addPost", tokenVerification, (req, res) => {
     const postTitle = req.body.postTitle
     const postContent = req.body.postContent
@@ -204,5 +222,6 @@ router.post("/addFriendRequest", tokenVerification, async (req, res) => {
         })
     })
 })
+
 
 module.exports = router
