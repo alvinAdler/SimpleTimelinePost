@@ -17,7 +17,8 @@
 
 .findfriends-input,
 .incoming-requests-container,
-.friends-list{
+.friends-list,
+.container-width{
     width: max(60%, 30rem);
 }
 

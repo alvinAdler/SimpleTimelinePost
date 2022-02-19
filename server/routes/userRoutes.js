@@ -110,7 +110,7 @@ router.get("/all", tokenVerification, async (req, res) => {
     })
 })
 
-router.get("/getUsers", tokenVerification, async (req, res) => {
+router.post("/getUsers", tokenVerification, async (req, res) => {
     const searchKeyword = req.body.searchKeyword
 
     if(!searchKeyword){

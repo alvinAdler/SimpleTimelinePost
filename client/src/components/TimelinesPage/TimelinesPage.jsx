@@ -48,7 +48,7 @@ const TimelinesPage = () => {
                 ))
                 :
                 <EmptyBanner
-                customClass="empty-banner-posts"
+                customClass="container-width"
                 bannerTitle="There are no contents for now. . ."
                 bannerDesc="Go ahead and post some stories!"
                 />
