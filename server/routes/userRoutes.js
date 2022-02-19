@@ -114,11 +114,6 @@ router.post("/addPost", tokenVerification, (req, res) => {
     const postTitle = req.body.postTitle
     const postContent = req.body.postContent
 
-    console.log("Req body")
-    console.log(req.body)
-    console.log(req.body.postTitle)
-    console.log(req.body.postContent)
-
     postModel.create({postTitle: postTitle, postContent: postContent, postOwner: req.user._id}, async (err, doc) => {
 
         if(err){
@@ -161,6 +156,52 @@ router.get("/getPosts", tokenVerification, async (req, res) => {
     return res.status(200).json({
         message: "Posts fetched",
         posts: modifiedPosts
+    })
+})
+
+router.get("/getFriends", tokenVerification, async (req, res) => {
+
+    userModel.findOne({_id: req.user._id}).populate("friendsList")
+    .then((result) => {
+        if(!result){
+            return res.status(400).json({
+                message: "This user is not registered in the system"
+            })
+        }
+
+        const friendsList = result.friendsList
+
+        return res.status(200).json({
+            message: "Fetched users's friends list",
+            friendsList: friendsList ? friendsList : []
+        })
+
+    })
+    .catch((err) => {
+        return res.status(500).json({
+            message: "Error while finding user",
+            error: err.message
+        })
+    })
+})
+
+router.post("/addFriendRequest", tokenVerification, async (req, res) => {
+    const targetedUserId = req.body.targetedUserId
+
+    Promise.all([
+        userModel.updateOne({_id: targetedUserId}, {$push: {friendRequests: req.user._id}})
+    ])
+    .then((results) => {
+        console.log(results)
+        return res.status(200).json({
+            message: "Success"
+        })
+    })
+    .catch((err) => {
+        console.log(err)
+        return res.status(500).json({
+            message: "Internal server error"
+        })
     })
 })
 

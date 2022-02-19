@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import swal from 'sweetalert2'
 
 import "./RegisterPage_master.css"
@@ -13,6 +14,8 @@ const RegisterPage = () => {
         password: "",
         confirmPassword: ""
     })
+
+    const navigate = useNavigate()
 
     const handleRegistrationSubmit = (ev) => {
         ev.preventDefault()
@@ -48,7 +51,20 @@ const RegisterPage = () => {
             }
         })
         .then((res) => {
-            alert(res.data.message)
+            swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: `${res.data.message}. You will be redirected to the login page`,
+                customClass: {
+                    popup: "swal-custom-popup",
+                    icon: "swal-icon",
+                    confirmButton: "swal-custom-confirm",
+                    cancelButton: "swal-custom-cancel"
+                }
+            })
+            .then(() => {
+                navigate("/login")
+            })
         })
         .catch((err) => {
             if(err.response){

@@ -18,13 +18,20 @@ const userSchema = new Schema({
     friendsList: {
         type: [mongoose.ObjectId],
         required: true,
-        default: []
+        default: [],
+        ref: "users"
     },
     posts: {
         type: [mongoose.ObjectId],
         required: true,
         default: [],
         ref: "posts"
+    },
+    friendRequests: {
+        type: [mongoose.ObjectId],
+        required: true,
+        default: [],
+        ref: "users"
     }
 })
 
