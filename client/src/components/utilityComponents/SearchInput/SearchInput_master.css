@@ -1,20 +1,48 @@
 .search-input-container{
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: center;
-    background-color: var(--color-sub);
-    padding-left: 1rem;
+    padding: 0;
+    position: relative;
+}
+
+.search-input-container > *{
+    width: 100%;
 }
 
 .search-input-container > input{
     flex-basis: 90%;
+    background-color: var(--color-sub);
     color: var(--color-secondary);
     padding: 0.3rem 0;
-    background: none;
     border: none;
     outline: none;
     font-size: 1.25rem;
-    margin: 0.25rem 0;
+    padding: 0.75rem 0.5rem;
+}
+
+.reset-search-button{
+    position: absolute;
+    height: max-content;
+    width: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    right: 12%;
+    font-size: 1rem;
+    color: var(--color-accent);
+    background-color: var(--color-secondary);
+    padding: 0.25rem;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    transition: 150ms all ease-in-out;
+}
+
+.reset-search-button:focus,
+.reset-search-button:hover{
+    background-color: var(--color-accent);
+    color: var(--color-secondary);
 }
 
 .search-input-container > input::placeholder{
