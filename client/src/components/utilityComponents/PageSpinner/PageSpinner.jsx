@@ -3,7 +3,9 @@ import { Spinner } from 'react-bootstrap'
 
 import './PageSpinner_master.css'
 
-const PageSpinner = ({message = "Loading", isShow = true}) => {
+import BlackBanner from '../BlackBanner/BlackBanner'
+
+const PageSpinner = ({message = "Loading", isShow = true, opacity}) => {
 
     useEffect(() => {
         document.querySelector("body").style.overflowY = "hidden"
@@ -21,6 +23,7 @@ const PageSpinner = ({message = "Loading", isShow = true}) => {
                 <Spinner className="custom-spinner" animation="grow"/>
                 <Spinner className="custom-spinner" animation="grow"/>
             </div>
+            <BlackBanner isVisible={true} opacity={opacity}/>
         </div>
     );
 };

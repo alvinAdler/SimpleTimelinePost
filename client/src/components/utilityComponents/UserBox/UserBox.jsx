@@ -3,7 +3,7 @@ import { FaPlus, FaTimes } from 'react-icons/fa'
 
 import './UserBox_master.css'
 
-const UserBox = ({username, showAddButton=true, showRemoveButton=true}) => {
+const UserBox = ({username, showAddButton=false, showRemoveButton=false}) => {
   return (
     <div className="userbox-container">
         <span>{username}</span>

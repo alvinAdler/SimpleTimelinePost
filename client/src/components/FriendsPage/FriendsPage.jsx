@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Cookies from 'js-cookie'
 import swal from 'sweetalert2'
 
@@ -8,12 +8,18 @@ import customAxios from "../utilities/customAxios"
 import SearchInput from "../utilityComponents/SearchInput/SearchInput"
 import UserBox from "../utilityComponents/UserBox/UserBox"
 import EmptyBanner from '../utilityComponents/EmptyBanner/EmptyBanner'
+import PageSpinner from '../utilityComponents/PageSpinner/PageSpinner'
+import AuthContext from '../utilityComponents/contexts/AuthContext'
 
 const FriendsPage = () => {
 
     const [foundUsers, setFoundUsers] = useState(null)
     const [incomingRequests, setIncomingRequests] = useState([])
     const [friendsList, setFriendsList] = useState([])
+
+    const [pageLoading, setPageLoading] = useState(true)
+
+    const authContext = useContext(AuthContext)
 
     useEffect(() => {
         customAxios({
@@ -26,9 +32,11 @@ const FriendsPage = () => {
         })
         .then((res) => {
             setFriendsList(res.data.friendsList)
+            setPageLoading(false)
         })
         .catch((err) => {
             console.log(err)
+            setPageLoading(false)
         })
     }, [])
 
@@ -48,6 +56,8 @@ const FriendsPage = () => {
             return
         }
 
+        setPageLoading(true)
+
         customAxios({
             method: "POST",
             url: "/users/getUsers",
@@ -61,9 +71,12 @@ const FriendsPage = () => {
         })
         .then((res) => {
             setFoundUsers(res.data.matchingUsers)
+            console.log(res.data.matchingUsers)
+            setPageLoading(false)
         })
         .catch((err) => {
             console.log(err)
+            setPageLoading(false)
         })
     }
 
@@ -80,7 +93,9 @@ const FriendsPage = () => {
                 <div className="foundusers-container">
                     <p>Result</p>
                     {foundUsers.map((user, index) => (
-                        <UserBox key={index} username={user.username} showRemoveButton={false}/>
+                        <UserBox key={index} username={user.username} 
+                        showAddButton={(user.username !== authContext.user.username) && (!friendsList.some((item) => item.username === user.username))}
+                        />
                     ))}
                 </div>
             :
@@ -94,27 +109,30 @@ const FriendsPage = () => {
             {incomingRequests.length > 0 &&
                 <div className="incoming-requests-container">
                     <h2>Incoming Requests</h2>
-                    <UserBox username="Alvin"/>
+                    <UserBox username="Alvin" showAddButton={true} showRemoveButton={true}/>
+                    <UserBox username="Alvin" showAddButton={true} showRemoveButton={true}/>
+                    <UserBox username="Alvin" showAddButton={true} showRemoveButton={true}/>
                 </div>
             }
 
 
-                <div className="friends-list">
-                    <h2>Your Friends</h2>
+            <div className="friends-list">
+                <h2>Your Friends</h2>
 
-                    {friendsList.length > 0 ?
-                        friendsList.map((user, index) => (
-                            <UserBox key={index} username={user.username} showAddButton={false}/>
-                        ))
-                    :
-                        <EmptyBanner
-                        bannerTitle="A little bit empty here..."
-                        bannerDesc="Discover some friends by adding their username!"
-                        style={{width: "100%"}}
-                        />
-                    }
-                </div>
-
+                {friendsList.length > 0 ?
+                    friendsList.map((user, index) => (
+                        <UserBox key={index} username={user.username} showRemoveButton={true}/>
+                    ))
+                :
+                    <EmptyBanner
+                    bannerTitle="A little bit empty here..."
+                    bannerDesc="Discover some friends by adding their username!"
+                    style={{width: "100%"}}
+                    />
+                }
+            </div>
+            
+            <PageSpinner opacity={0.5} isShow={pageLoading}/>
         </div>
     )
 }
