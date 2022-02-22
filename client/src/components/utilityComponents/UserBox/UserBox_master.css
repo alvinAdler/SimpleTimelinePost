@@ -17,12 +17,15 @@
     gap: 0 1rem;
 }
 
-.action-icons-container > *{
+.userbox-icon{
     font-size: 1.5rem;
+}
+
+.clickable-icon{
     transition: 150ms color ease-in-out;
     cursor: pointer;
 }
 
-.action-icons-container > *:hover{
+.clickable-icon:hover{
     color: var(--color-accent);
 }

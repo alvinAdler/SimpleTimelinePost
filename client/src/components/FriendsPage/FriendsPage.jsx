@@ -303,7 +303,8 @@ const FriendsPage = () => {
                     <p>Result</p>
                     {foundUsers.map((user, index) => (
                         <UserBox key={index} user={user} 
-                        showAddButton={(user.username !== authContext.user.username) && (!friendsList.some((item) => item.username === user.username))}
+                        showAddButton={(user.username !== authContext.user.username) && (!friendsList.some((item) => item.username === user.username)) && !user.isFriendRequestSent}
+                        showLoadingIcon={user.isFriendRequestSent}
                         onAddClick={handleAddFriendRequest}
                         />
                     ))}

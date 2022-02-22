@@ -119,11 +119,18 @@ router.post("/getUsers", tokenVerification, async (req, res) => {
     }
 
     const regex = new RegExp(`${searchKeyword}`)
-    const matchingUsers = await userModel.find({username:  regex}, {createdAt: 0, password: 0, friendRequests: 0})
+    const matchingUsers = await userModel.find({username:  regex}, {createdAt: 0, password: 0})
+
+    const newUsers = matchingUsers.map((user) => {
+        const modUser = user.toObject()
+        modUser["isFriendRequestSent"] = user.friendRequests.includes(req.user._id)
+        delete modUser["friendRequests"]
+        return modUser
+    })
 
     return res.status(200).json({
         message: "success",
-        matchingUsers: matchingUsers
+        matchingUsers: newUsers
     })
 })
 
