@@ -163,7 +163,9 @@ router.post("/addPost", tokenVerification, (req, res) => {
 })
 
 router.get("/getPosts", tokenVerification, async (req, res) => {
-    let fetchedPosts = await postModel.find({postOwner: req.user._id})
+    const user = await userModel.findOne({_id: req.user._id})
+
+    let fetchedPosts = await postModel.find({postOwner: {$in: [req.user._id, ...user.friendsList]}}).sort({createdAt: -1})
 
     if(!fetchedPosts){
         return res.status(500).json({
