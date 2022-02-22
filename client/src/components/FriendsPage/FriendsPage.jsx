@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import Cookies from 'js-cookie'
 import swal from 'sweetalert2'
+import axios from 'axios'
 
 import "./FriendsPage_master.css"
 
@@ -22,22 +23,35 @@ const FriendsPage = () => {
     const authContext = useContext(AuthContext)
 
     useEffect(() => {
-        customAxios({
-            method: "GET",
-            url: "/users/getFriends",
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": `Bearer ${Cookies.get("authToken")}`
-            }
-        })
-        .then((res) => {
+
+        axios.all([
+            axios({
+                method: "GET",
+                url: "http://localhost:5000/users/getFriends",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${Cookies.get("authToken")}`
+                }    
+            }),
+            axios({
+                method: "GET",
+                url: "http://localhost:5000/users/getFriendRequests",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${Cookies.get("authToken")}`
+                }
+            })
+        ])
+        .then(axios.spread((res, res2) => {
             setFriendsList(res.data.friendsList)
+            setIncomingRequests(res2.data.friendRequests)
             setPageLoading(false)
-        })
+        }))
         .catch((err) => {
             console.log(err)
             setPageLoading(false)
         })
+
     }, [])
 
     const handleUserSearch = (searchKeyword) => {
@@ -80,6 +94,201 @@ const FriendsPage = () => {
         })
     }
 
+    const handleAddFriendRequest = (user) => {
+
+        swal.fire({
+            icon: "question",
+            title: "Confirmation",
+            text: `Are you sure to send friend request to ${user.username}?`,
+            showCancelButton: true,
+            customClass: {
+                popup: "swal-custom-popup",
+                icon: "swal-icon",
+                confirmButton: "swal-custom-confirm",
+                cancelButton: "swal-custom-cancel"
+            }
+        })
+        .then((res) => {
+            if(res.isConfirmed){
+                setPageLoading(true)
+
+                customAxios({
+                    method: "POST",
+                    url: "/users/addFriendRequest",
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${Cookies.get("authToken")}`
+                    },
+                    data: {
+                        targetedUserId: user._id
+                    }
+                })
+                .then((res) => {
+                    setPageLoading(false)
+                    swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: `Friend request sent to ${user.username}`,
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                })
+                .catch((err) => {
+                    setPageLoading(false)
+                    swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Friend request failed",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                    console.error(err.response)
+                })
+            }
+        })
+    }
+
+    const handleAcceptFriend = (user) => {
+
+        swal.fire({
+            icon: "question",
+            title: "Confirmation",
+            text: `Are you sure to accept ${user.username} as a friend?`,
+            showCancelButton: true,
+            customClass: {
+                popup: "swal-custom-popup",
+                icon: "swal-icon",
+                confirmButton: "swal-custom-confirm",
+                cancelButton: "swal-custom-cancel"
+            }
+        })
+        .then((res) => {
+            if(res.isConfirmed){
+                setPageLoading(true)
+
+                customAxios({
+                    method: "POST",
+                    url: "/users/acceptFriendRequest",
+                    headers:{
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${Cookies.get("authToken")}`
+                    },
+                    data: {
+                        acceptedUserId: user._id
+                    }
+                })
+                .then((res) => {
+                    setPageLoading(false)
+                    swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: `Successfully added ${user.username} as a friend`,
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                    .then(() => [
+                        window.location.reload()
+                    ])
+                })
+                .catch((err) => {
+                    setPageLoading(false)
+                    console.error(err.response)
+                    swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Failed to accept friend request",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                })
+            }
+        })
+
+
+    }
+
+    const handleRejectFriend = (user) => {
+
+        swal.fire({
+            icon: "question",
+            title: "Confirmation",
+            text: `Are you sure to reject ${user.username}'s friend request?`,
+            showCancelButton: true,
+            customClass: {
+                popup: "swal-custom-popup",
+                icon: "swal-icon",
+                confirmButton: "swal-custom-confirm",
+                cancelButton: "swal-custom-cancel"
+            }
+        })
+        .then((res) => {
+            if(res.isConfirmed){
+                setPageLoading(true)
+                customAxios({
+                    method: "POST",
+                    url: "/users/rejectFriendRequest",
+                    headers:{
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${Cookies.get("authToken")}`
+                    },
+                    data: {
+                        rejectedUserId: user._id
+                    }
+                })
+                .then((res) => {
+                    setPageLoading(false)
+                    swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: `Successfully reject ${user.username}'s friend request`,
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                    .then(() => {
+                        window.location.reload()
+                    })
+                })
+                .catch((err) => {
+                    setPageLoading(false)
+                    console.error(err.response)
+                    swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Failed to reject friend request",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                })
+            }
+        })
+
+
+    }
+
     return (
         <div className="friendspage-container">
             <h2>Find more people!</h2>
@@ -93,8 +302,9 @@ const FriendsPage = () => {
                 <div className="foundusers-container">
                     <p>Result</p>
                     {foundUsers.map((user, index) => (
-                        <UserBox key={index} username={user.username} 
+                        <UserBox key={index} user={user} 
                         showAddButton={(user.username !== authContext.user.username) && (!friendsList.some((item) => item.username === user.username))}
+                        onAddClick={handleAddFriendRequest}
                         />
                     ))}
                 </div>
@@ -109,9 +319,12 @@ const FriendsPage = () => {
             {incomingRequests.length > 0 &&
                 <div className="incoming-requests-container">
                     <h2>Incoming Requests</h2>
-                    <UserBox username="Alvin" showAddButton={true} showRemoveButton={true}/>
-                    <UserBox username="Alvin" showAddButton={true} showRemoveButton={true}/>
-                    <UserBox username="Alvin" showAddButton={true} showRemoveButton={true}/>
+                    {incomingRequests.map((user, index) => (
+                        <UserBox key={index} user={user} showAddButton={true} showRemoveButton={true}
+                        onAddClick = {handleAcceptFriend}
+                        onRemoveClick = {handleRejectFriend}
+                        />
+                    ))}
                 </div>
             }
 
@@ -121,7 +334,7 @@ const FriendsPage = () => {
 
                 {friendsList.length > 0 ?
                     friendsList.map((user, index) => (
-                        <UserBox key={index} username={user.username} showRemoveButton={true}/>
+                        <UserBox key={index} user={user} showRemoveButton={true}/>
                     ))
                 :
                     <EmptyBanner

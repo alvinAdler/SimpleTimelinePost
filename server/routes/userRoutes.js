@@ -101,7 +101,6 @@ router.post("/verify", tokenVerification, (req, res) => {
 
 router.get("/all", tokenVerification, async (req, res) => {
 
-    console.log(req.user)
     const allUsers = await userModel.find()
 
     return res.status(200).json({
@@ -120,7 +119,7 @@ router.post("/getUsers", tokenVerification, async (req, res) => {
     }
 
     const regex = new RegExp(`${searchKeyword}`)
-    const matchingUsers = await userModel.find({username:  regex})
+    const matchingUsers = await userModel.find({username:  regex}, {createdAt: 0, password: 0, friendRequests: 0})
 
     return res.status(200).json({
         message: "success",
@@ -187,7 +186,10 @@ router.get("/getFriends", tokenVerification, async (req, res) => {
             })
         }
 
-        const friendsList = result.friendsList
+        const friendsList = result.friendsList.map(({...rest}) => {
+            const {createdAt, password, friendRequests, ...restFinal} = rest._doc
+            return restFinal
+        })
 
         return res.status(200).json({
             message: "Fetched users's friends list",
@@ -206,11 +208,20 @@ router.get("/getFriends", tokenVerification, async (req, res) => {
 router.post("/addFriendRequest", tokenVerification, async (req, res) => {
     const targetedUserId = req.body.targetedUserId
 
+    const targetUser = await userModel.findOne({_id: targetedUserId})
+    const isRequestAdded = targetUser.friendRequests.includes(req.user._id)
+    const isAlreadyFriend = targetUser.friendsList.includes(req.user._id)
+
+    if(isRequestAdded || isAlreadyFriend){
+        return res.status(200).json({
+            message: "Success. Request doubled."
+        })
+    }
+
     Promise.all([
         userModel.updateOne({_id: targetedUserId}, {$push: {friendRequests: req.user._id}})
     ])
     .then((results) => {
-        console.log(results)
         return res.status(200).json({
             message: "Success"
         })
@@ -221,6 +232,70 @@ router.post("/addFriendRequest", tokenVerification, async (req, res) => {
             message: "Internal server error"
         })
     })
+})
+
+router.get("/getFriendRequests", tokenVerification, async (req, res) => {
+    const user = await userModel.findOne({_id: req.user._id}).populate("friendRequests")
+    const friendRequests = user.friendRequests
+
+    if(friendRequests.length > 0){
+        return res.status(200).json({
+            message: "Success",
+            friendRequests
+        })
+    }
+    return res.status(200).json({
+        message: "No friend requests",
+        friendRequests: []
+    })
+})
+
+router.post("/acceptFriendRequest", tokenVerification, async (req, res) => {
+    const acceptedUserId = req.body.acceptedUserId
+    
+    try{
+        const isFriendUpdated = await userModel.updateOne({_id: req.user._id}, {$push: {friendsList: acceptedUserId}, $pull: {friendRequests: acceptedUserId}})
+        const isTargetFriendUpdated = await userModel.updateOne({_id: acceptedUserId}, {$push: {friendsList: req.user._id}})
+
+        if(isFriendUpdated.acknowledged && isTargetFriendUpdated){
+            return res.status(200).json({
+                message: "Friend request accepted"
+            })
+        }
+    
+        return res.status(500).json({
+            message: "Can not accept friend"
+        })
+    }
+    catch(err){
+        return res.status(500).json({
+            message: "System failed to accept friend"
+        })
+    }
+})
+
+router.post("/rejectFriendRequest", tokenVerification, async (req, res) => {
+    const rejectedUserId = req.body.rejectedUserId
+
+    try{
+        const isFriendRejected = await userModel.updateOne({_id: req.user._id}, {$pull: {friendRequests: rejectedUserId}})
+
+        if(isFriendRejected.acknowledged){
+            return res.status(200).json({
+                message: "Friend request rejected"
+            })
+        }
+
+        return res.status(500).json({
+            message: "Can not reject friend"
+        })
+
+    }
+    catch(err){
+        return res.status(500).json({
+            message: "System failed to reject friend"
+        })
+    }
 })
 
 
