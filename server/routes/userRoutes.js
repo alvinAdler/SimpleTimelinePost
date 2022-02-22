@@ -305,5 +305,36 @@ router.post("/rejectFriendRequest", tokenVerification, async (req, res) => {
     }
 })
 
+router.post("/removeFriend", tokenVerification, async (req, res) => {
+    const targetUserId = req.body.targetUserId
+
+    if(!targetUserId){
+        return res.status(400).json({
+            message: "No target user ID provided"
+        })
+    }
+
+    try{
+        const isTargetRemoved = await userModel.updateOne({_id: req.user._id}, {$pull: {friendsList: targetUserId}})
+        const isSelfRemoved = await userModel.updateOne({_id: targetUserId}, {$pull: {friendsList: req.user._id}})
+
+        if(isTargetRemoved.acknowledged && isSelfRemoved.acknowledged){
+            return res.status(200).json({
+                message: "Successfully removed a friend",
+            })
+        }
+
+        return res.status(200).json({
+            message: "No friends to be removed"
+        })
+    }
+    catch(err){
+        console.error(err)
+        return res.status(500).json({
+            message: "Failed to remove friend"
+        })
+    }
+})
+
 
 module.exports = router

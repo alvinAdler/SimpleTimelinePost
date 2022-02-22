@@ -285,8 +285,73 @@ const FriendsPage = () => {
                 })
             }
         })
+    }
 
+    const handleFriendRemove = (user) => {
 
+        swal.fire({
+            icon: "question",
+            title: "Confirmation",
+            text: `Are you sure to remove ${user.username} from your friends list?`,
+            showCancelButton: true,
+            customClass: {
+                popup: "swal-custom-popup",
+                icon: "swal-icon",
+                confirmButton: "swal-custom-confirm",
+                cancelButton: "swal-custom-cancel"
+            }
+        })
+        .then((res) => {
+            if(res.isConfirmed){
+                setPageLoading(true)
+
+                customAxios({
+                    method: "POST",
+                    url: "/users/removeFriend",
+                    headers:{
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${Cookies.get("authToken")}`
+                    },
+                    data: {
+                        targetUserId: user._id
+                    }
+                })
+                .then((res) => {
+                    setPageLoading(false)
+
+                    swal.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: "Successfully removed a friend",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                    .then(() => {
+                        window.location.reload()
+                    })
+
+                })
+                .catch((err) => {
+                    setPageLoading(false)
+                    console.error(err.response)
+                    swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Failed to remove a friend",
+                        customClass: {
+                            popup: "swal-custom-popup",
+                            icon: "swal-icon",
+                            confirmButton: "swal-custom-confirm",
+                            cancelButton: "swal-custom-cancel"
+                        }
+                    })
+                })
+            }
+        })
     }
 
     return (
@@ -335,7 +400,7 @@ const FriendsPage = () => {
 
                 {friendsList.length > 0 ?
                     friendsList.map((user, index) => (
-                        <UserBox key={index} user={user} showRemoveButton={true}/>
+                        <UserBox key={index} user={user} showRemoveButton={true} onRemoveClick={handleFriendRemove}/>
                     ))
                 :
                     <EmptyBanner
