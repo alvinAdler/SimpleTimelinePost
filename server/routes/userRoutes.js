@@ -152,7 +152,7 @@ router.post("/addPost", tokenVerification, (req, res) => {
         if(result.acknowledged){
             return res.status(200).json({
                 message: "Post has been successfully added",
-                doc: doc,
+                post: doc
             })
         }
         return res.status(500).json({

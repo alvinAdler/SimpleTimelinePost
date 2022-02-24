@@ -7,7 +7,7 @@ import './PostWriteBox_master.css'
 
 import BaseButton from '../Buttons/BaseButton/BaseButton'
 
-const PostWriteBox = () => {
+const PostWriteBox = ({onPostSubmitCallback}) => {
 
 	const [postTitle, setPostTitle] = useState("")
 	const [postContent, setPostValue] = useState("")
@@ -59,6 +59,7 @@ const PostWriteBox = () => {
 				})
 				.then((res) => {
 					if(res.status === 200){
+						onPostSubmitCallback(res.data.post)
 						swal.fire({
 							icon: "success",
 							title: "Posted!",
@@ -69,9 +70,6 @@ const PostWriteBox = () => {
 								confirmButton: "swal-custom-confirm",
 								cancelButton: "swal-custom-cancel"
 							}
-						})
-						.then(() => {
-							window.location.reload()
 						})
 					}
 				})

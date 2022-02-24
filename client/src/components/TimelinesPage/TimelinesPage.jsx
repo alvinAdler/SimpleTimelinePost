@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import Cookies from 'js-cookie'
 
 import "./TimelinesPage_master.css"
@@ -7,6 +7,7 @@ import customAxios from '../utilities/customAxios'
 import PostWriteBox from "../utilityComponents/PostWriteBox/PostWriteBox"
 import PostBox from "../utilityComponents/PostBox/PostBox"
 import EmptyBanner from '../utilityComponents/EmptyBanner/EmptyBanner'
+import AuthContext from '../utilityComponents/contexts/AuthContext'
 import { 
     getDateObject, 
     customDate
@@ -15,6 +16,8 @@ import {
 const TimelinesPage = () => {
 
     const [posts, setPosts] = useState([]);
+    
+    const authContext = useContext(AuthContext)
 
     useEffect(() => {
         customAxios({
@@ -33,10 +36,16 @@ const TimelinesPage = () => {
         })
     }, [])
 
+    const handleSubmitPostCallback = (post) => {
+        const newPost = {...post, username: authContext.user.username}
+
+        setPosts([newPost, ...posts])
+    }
+
     return (
         <div className="timelinespage-container">
             <h2>What's on your mind?</h2>
-            <PostWriteBox/>
+            <PostWriteBox onPostSubmitCallback={handleSubmitPostCallback}/>
             {
                 posts.length > 0 ? 
                 posts.map((post, index) => (

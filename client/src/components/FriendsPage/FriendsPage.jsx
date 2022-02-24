@@ -112,6 +112,16 @@ const FriendsPage = () => {
             if(res.isConfirmed){
                 setPageLoading(true)
 
+                setFoundUsers(foundUsers.map((currentUser) => {
+                    if(currentUser === user){
+                        return {
+                            ...currentUser,
+                            isFriendRequestSent: true
+                        }
+                    }
+                    return currentUser
+                }))
+
                 customAxios({
                     method: "POST",
                     url: "/users/addFriendRequest",
@@ -187,6 +197,10 @@ const FriendsPage = () => {
                 })
                 .then((res) => {
                     setPageLoading(false)
+
+                    setIncomingRequests(incomingRequests.filter((currentUser) => currentUser !== user))
+                    setFriendsList([...friendsList, user])
+
                     swal.fire({
                         icon: "success",
                         title: "Success",
@@ -198,9 +212,6 @@ const FriendsPage = () => {
                             cancelButton: "swal-custom-cancel"
                         }
                     })
-                    .then(() => [
-                        window.location.reload()
-                    ])
                 })
                 .catch((err) => {
                     setPageLoading(false)
@@ -253,6 +264,8 @@ const FriendsPage = () => {
                 })
                 .then((res) => {
                     setPageLoading(false)
+                    setIncomingRequests(incomingRequests.filter((currentUser) => currentUser !== user))
+
                     swal.fire({
                         icon: "success",
                         title: "Success",
@@ -263,9 +276,6 @@ const FriendsPage = () => {
                             confirmButton: "swal-custom-confirm",
                             cancelButton: "swal-custom-cancel"
                         }
-                    })
-                    .then(() => {
-                        window.location.reload()
                     })
                 })
                 .catch((err) => {
@@ -319,6 +329,8 @@ const FriendsPage = () => {
                 .then((res) => {
                     setPageLoading(false)
 
+                    setFriendsList(friendsList.filter((currentUser) => currentUser !== user))
+
                     swal.fire({
                         icon: "success",
                         title: "Success",
@@ -329,9 +341,6 @@ const FriendsPage = () => {
                             confirmButton: "swal-custom-confirm",
                             cancelButton: "swal-custom-cancel"
                         }
-                    })
-                    .then(() => {
-                        window.location.reload()
                     })
 
                 })
