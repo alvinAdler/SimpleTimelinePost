@@ -6,6 +6,7 @@ import axios from 'axios'
 import "./FriendsPage_master.css"
 
 import usePagination from '../utilities/usePagination'
+import useSearchState from '../utilities/useSearchState'
 import customAxios from "../utilities/customAxios"
 import SearchInput from "../utilityComponents/SearchInput/SearchInput"
 import UserBox from "../utilityComponents/UserBox/UserBox"
@@ -16,7 +17,7 @@ import Pagination from '../utilityComponents/Pagination/Pagination'
 
 const FriendsPage = () => {
 
-    const [foundUsers, setFoundUsers] = useState([])
+    const [foundUsers, setFoundUsers, hasUserSearched, setHasUserSearched] = useSearchState([])
     const [incomingRequests, setIncomingRequests] = useState([])
     const [friendsList, setFriendsList] = useState([])
     const [pageLoading, setPageLoading] = useState(true)
@@ -89,12 +90,13 @@ const FriendsPage = () => {
         })
         .then((res) => {
             setFoundUsers(res.data.matchingUsers)
-            console.log(res.data.matchingUsers)
+            setHasUserSearched(true)
             setPageLoading(false)
         })
         .catch((err) => {
             console.log(err)
             setPageLoading(false)
+            setHasUserSearched(true)
         })
     }
 
@@ -376,7 +378,7 @@ const FriendsPage = () => {
             searchCallback={handleUserSearch}
             />
 
-            {foundUsers && (foundUsers.length > 0 ?
+            {hasUserSearched && (foundUsers.length > 0 ?
                 <div className="foundusers-container">
                     <p>Result</p>
 
