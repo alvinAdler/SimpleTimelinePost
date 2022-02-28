@@ -3,8 +3,10 @@ require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
+const jwt = require("jsonwebtoken")
 
 const userRoutes = require("./routes/userRoutes")
+const refreshTokenVerification = require("./middlewares/refreshTokenVerification")
 
 const app = express()
 
@@ -18,6 +20,21 @@ db.on("error", (err) => console.log(err))
 db.once("open", () => console.log("Connected to Database"))
 
 app.use("/users", userRoutes)
+
+app.get("/refreshToken", refreshTokenVerification, (req, res) => {
+    const authToken = jwt.sign({
+        _Id: req.user._id,
+        username: req.user.username
+    },
+    process.env.AUTH_TOKEN_KEY,
+    {expiresIn: "2h"})
+
+    return res.status(200).json({
+        message: "Token refreshed",
+        refreshToken: req.refreshToken,
+        authToken: authToken
+    })
+})
 
 app.listen("5000", () => {
     console.log("Server Started")
