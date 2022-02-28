@@ -5,22 +5,26 @@ import axios from 'axios'
 
 import "./FriendsPage_master.css"
 
+import usePagination from '../utilities/usePagination'
 import customAxios from "../utilities/customAxios"
 import SearchInput from "../utilityComponents/SearchInput/SearchInput"
 import UserBox from "../utilityComponents/UserBox/UserBox"
 import EmptyBanner from '../utilityComponents/EmptyBanner/EmptyBanner'
 import PageSpinner from '../utilityComponents/PageSpinner/PageSpinner'
 import AuthContext from '../utilityComponents/contexts/AuthContext'
+import Pagination from '../utilityComponents/Pagination/Pagination'
 
 const FriendsPage = () => {
 
-    const [foundUsers, setFoundUsers] = useState(null)
+    const [foundUsers, setFoundUsers] = useState([])
     const [incomingRequests, setIncomingRequests] = useState([])
     const [friendsList, setFriendsList] = useState([])
-
     const [pageLoading, setPageLoading] = useState(true)
 
     const authContext = useContext(AuthContext)
+
+    const friendsPagination = usePagination(10, friendsList)
+    const foundUsersPagination = usePagination(10, foundUsers)
 
     useEffect(() => {
 
@@ -375,13 +379,21 @@ const FriendsPage = () => {
             {foundUsers && (foundUsers.length > 0 ?
                 <div className="foundusers-container">
                     <p>Result</p>
-                    {foundUsers.map((user, index) => (
-                        <UserBox key={index} user={user} 
-                        showAddButton={(user.username !== authContext.user.username) && (!friendsList.some((item) => item.username === user.username)) && !user.isFriendRequestSent}
-                        showLoadingIcon={user.isFriendRequestSent}
-                        onAddClick={handleAddFriendRequest}
-                        />
-                    ))}
+
+                    <Pagination
+                    paginator={foundUsersPagination}
+                    itemsNum={foundUsers.length}
+                    itemsPerPage={foundUsersPagination.ITEMS_PER_PAGE}
+                    >
+                        {foundUsersPagination.paginatedItems.map((user, index) => (
+                            <UserBox key={index} user={user}
+                            showAddButton={(user.username !== authContext.user.username) && (!friendsList.some((item) => item.username === user.username)) && !user.isFriendRequestSent}
+                            showLoadingIcon={user.isFriendRequestSent}
+                            onAddClick={handleAddFriendRequest}
+                            />
+                        ))}
+                    </Pagination>
+
                 </div>
             :
                 <EmptyBanner
@@ -408,9 +420,17 @@ const FriendsPage = () => {
                 <h2>Your Friends</h2>
 
                 {friendsList.length > 0 ?
-                    friendsList.map((user, index) => (
-                        <UserBox key={index} user={user} showRemoveButton={true} onRemoveClick={handleFriendRemove}/>
-                    ))
+
+                    <Pagination 
+                    paginator={friendsPagination}
+                    itemsNum={friendsList.length}
+                    itemsPerPage={friendsPagination.ITEMS_PER_PAGE}
+                    >
+                        {friendsPagination.paginatedItems.map((user, index) => (
+                            <UserBox key={index} user={user} showRemoveButton={true} onRemoveClick={handleFriendRemove}/>
+                        ))}
+                    </Pagination>
+
                 :
                     <EmptyBanner
                     bannerTitle="A little bit empty here..."
@@ -420,7 +440,7 @@ const FriendsPage = () => {
                 }
             </div>
             
-            <PageSpinner opacity={0.5} isShow={pageLoading}/>
+            {pageLoading && <PageSpinner opacity={0.5} isShow={true}/>}
         </div>
     )
 }

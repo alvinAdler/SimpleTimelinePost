@@ -1,0 +1,21 @@
+.pagination-container{
+    width: 100%;
+}
+
+.pagination-buttons{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0.35rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination-button{
+    color: var(--color-secondary);
+    outline: none;
+    border: none;
+    background-color: var(--color-sub);
+    font-size: 1.25rem;
+    padding: 0.25rem;
+    min-width: 2rem;
+}

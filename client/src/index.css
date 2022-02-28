@@ -31,6 +31,7 @@ html, body, .App, #root{
   height: max-content;
   background-color: var(--color-primary);
   color: var(--color-secondary);
+  /* overflow-y: auto; */
 }
 
 p, h4, a{
