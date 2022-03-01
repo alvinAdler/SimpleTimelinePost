@@ -51,7 +51,6 @@ const RequireAuth = ({children}) => {
                     authContext.setUser(result.data.user)
 
                     if(REJECT_AFTER_AUTH.includes(location.pathname)){
-                        console.log("I am here")
                         navigate(-1, {replace: true})
                         return
                     }
@@ -63,6 +62,7 @@ const RequireAuth = ({children}) => {
             catch(err){
                 console.log("An error has occured in the required auth component")
                 console.log(err.response)
+                console.log(err)
                 if(REJECT_AFTER_AUTH.includes(location.pathname)){
                     setComponentController(1)
                 }else{

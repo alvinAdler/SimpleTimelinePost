@@ -5,7 +5,7 @@ const tokenVerification = (req, res, next) => {
     const authToken = req.headers.authorization.split(" ")[1]
     
     if(!authToken){
-        return res.status(403).json({
+        return res.status(400).json({
             message: "Prohibited. No token provided"
         })
     }

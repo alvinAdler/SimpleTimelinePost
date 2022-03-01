@@ -69,7 +69,7 @@ router.post("/login", async (req, res) => {
         username: fetchedUser.username
     }, 
     process.env.AUTH_TOKEN_KEY, 
-    {expiresIn: "2h"})
+    {expiresIn: "10s"})
 
     const refreshToken = jwt.sign({
         _id: fetchedUser._id,

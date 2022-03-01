@@ -4,7 +4,7 @@ const refreshTokenVerification = (req, res, next) => {
     const refreshToken = req.headers.refreshtoken.split(" ")[1]
 
     if(!refreshToken){
-        return res.status(403).json({
+        return res.status(400).json({
             message: "Prohibited. No refresh token provided"
         })
     }

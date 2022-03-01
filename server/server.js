@@ -23,11 +23,11 @@ app.use("/users", userRoutes)
 
 app.get("/refreshToken", refreshTokenVerification, (req, res) => {
     const authToken = jwt.sign({
-        _Id: req.user._id,
+        _id: req.user._id,
         username: req.user.username
     },
     process.env.AUTH_TOKEN_KEY,
-    {expiresIn: "2h"})
+    {expiresIn: "30m"})
 
     return res.status(200).json({
         message: "Token refreshed",
