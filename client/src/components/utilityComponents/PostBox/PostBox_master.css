@@ -1,5 +1,4 @@
 .postbox-container{
-    width: max(60%, 30rem);
     background-color: var(--color-sub);
     padding: 0.5% 2%;
     margin-bottom: 4rem;

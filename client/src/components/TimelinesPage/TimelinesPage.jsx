@@ -3,11 +3,13 @@ import Cookies from 'js-cookie'
 
 import "./TimelinesPage_master.css"
 
+import usePagination from '../utilities/usePagination'
 import customAxios from '../utilities/customAxios'
 import PostWriteBox from "../utilityComponents/PostWriteBox/PostWriteBox"
 import PostBox from "../utilityComponents/PostBox/PostBox"
 import EmptyBanner from '../utilityComponents/EmptyBanner/EmptyBanner'
 import AuthContext from '../utilityComponents/contexts/AuthContext'
+import Pagination from '../utilityComponents/Pagination/Pagination'
 import { 
     getDateObject, 
     customDate
@@ -19,6 +21,8 @@ const TimelinesPage = () => {
     
     const authContext = useContext(AuthContext)
 
+    const postPaginator = usePagination(5, posts)
+
     useEffect(() => {
         customAxios({
             method: "GET",
@@ -29,6 +33,7 @@ const TimelinesPage = () => {
         })
         .then((res) => {
             setPosts(res.data.posts)
+            console.log(res.data.posts)
         })
         .catch((err) => {
             console.log(err)
@@ -46,15 +51,23 @@ const TimelinesPage = () => {
             <h2>What's on your mind?</h2>
             <PostWriteBox onPostSubmitCallback={handleSubmitPostCallback}/>
             {
-                posts.length > 0 ? 
-                posts.map((post, index) => (
-                    <PostBox key={index} postTitle={post.postTitle}
-                    postDate={customDate(getDateObject(post.createdAt))}
-                    username={post.username}
-                    postContent={post.postContent}
-                    />
-                ))
+                posts.length > 0 ?                 
+                <Pagination 
+                itemsNum={posts.length}
+                itemsPerPage={postPaginator.ITEMS_PER_PAGE}
+                paginator={postPaginator}
+                >
+                    {postPaginator.paginatedItems.map((post, index) => (
+                        <PostBox key={post._id} postTitle={post.postTitle}
+                        postDate={customDate(getDateObject(post.createdAt))}
+                        username={post.username}
+                        postContent={post.postContent}
+                        />
+                    ))}
+                </Pagination>
+
                 :
+                
                 <EmptyBanner
                 customClass="container-width"
                 bannerTitle="There are no contents for now. . ."
