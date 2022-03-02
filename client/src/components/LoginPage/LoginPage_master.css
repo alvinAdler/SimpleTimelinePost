@@ -126,11 +126,15 @@
         flex-basis: 0;
     }
 
+    .welcomingBanner{
+        order: 1;
+    }
+
     .welcomingBanner > h1{
         font-size: 3.5rem
     }
 
-    .imageBanner{
+    .welcomingBanner{
         position: fixed;
         top: 50%;
         left: 50%;
