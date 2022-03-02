@@ -3,13 +3,9 @@ import { FaPlus, FaTimes, FaClock } from 'react-icons/fa'
 
 import './UserBox_master.css'
 
-const defaultAddClick = () => {
-
-}
-
-const defaultRemoveClick = () => {
-
-}
+//* Leave both of these functions empty 
+const defaultAddClick = () => {}
+const defaultRemoveClick = () => {}
 
 const UserBox = ({user, showAddButton=false, showRemoveButton=false, showLoadingIcon=false, onAddClick=defaultAddClick, onRemoveClick=defaultRemoveClick}) => {
   return (

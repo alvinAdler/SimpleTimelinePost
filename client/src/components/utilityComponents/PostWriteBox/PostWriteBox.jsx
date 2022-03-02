@@ -10,7 +10,7 @@ import BaseButton from '../Buttons/BaseButton/BaseButton'
 const PostWriteBox = ({onPostSubmitCallback}) => {
 
 	const [postTitle, setPostTitle] = useState("")
-	const [postContent, setPostValue] = useState("")
+	const [postContent, setPostContent] = useState("")
 
 	const handleSubmitPost = (ev) => {
 		ev.preventDefault()
@@ -60,6 +60,8 @@ const PostWriteBox = ({onPostSubmitCallback}) => {
 				.then((res) => {
 					if(res.status === 200){
 						onPostSubmitCallback(res.data.post)
+						setPostTitle("")
+						setPostContent("")
 						swal.fire({
 							icon: "success",
 							title: "Posted!",
@@ -95,11 +97,11 @@ const PostWriteBox = ({onPostSubmitCallback}) => {
 	return(
 	<div className="postwritebox-container">
 		<input type="text" className="postwritebox-title" placeholder='Put post title here...'
-		onChange={(ev) => setPostTitle(ev.target.value)}/>
+		value={postTitle} onChange={(ev) => setPostTitle(ev.target.value)}/>
 		<hr className='postwritebox-separator'/>
 		<form className="post-container" onSubmit={handleSubmitPost}>
 			<textarea className="postwrite-textarea" placeholder="Type something nice..."
-			onChange={(ev) => setPostValue(ev.target.value)}
+			value={postContent} onChange={(ev) => setPostContent(ev.target.value)}
 			/>
 			<BaseButton type="submit" buttonText="Post" customClass="post-button"/>
 		</form>

@@ -12,7 +12,8 @@ const refreshTokenVerification = (req, res, next) => {
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY, (err, result) => {
         if(err){
             return res.status(403).json({
-                message: "Prohibited. Refresh token is not valid"
+                message: "Prohibited. Refresh token is not valid",
+                isRefreshTokenExpired: true
             })
         }
 

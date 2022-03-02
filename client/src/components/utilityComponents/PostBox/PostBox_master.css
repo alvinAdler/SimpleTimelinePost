@@ -5,6 +5,10 @@
     margin-bottom: 4rem;
 }
 
+.postbox-header{
+    position: relative;
+}
+
 .postcontent-separator{
     border: 2px solid var(--color-accent);
 }
@@ -23,3 +27,18 @@
     margin: 1rem 0;
     white-space: pre-wrap;
 }
+
+.post-content.hide{
+    max-height: 5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.toggle-post-content{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+}
+
