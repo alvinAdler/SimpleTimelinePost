@@ -56,6 +56,7 @@ const TimelinesPage = () => {
                 itemsNum={posts.length}
                 itemsPerPage={postPaginator.ITEMS_PER_PAGE}
                 paginator={postPaginator}
+                customClass="container-width"
                 >
                     {postPaginator.paginatedItems.map((post, index) => (
                         <PostBox key={post._id} postTitle={post.postTitle}
