@@ -4,6 +4,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 const jwt = require("jsonwebtoken")
+const path = require("path")
 
 const userRoutes = require("./routes/userRoutes")
 const refreshTokenVerification = require("./middlewares/refreshTokenVerification")
@@ -36,6 +37,14 @@ app.get("/refreshToken", refreshTokenVerification, (req, res) => {
     })
 })
 
-app.listen("5000", () => {
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static("client/build"))
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+    })
+}
+
+app.listen(process.env.PORT, () => {
     console.log("Server Started")
 })
