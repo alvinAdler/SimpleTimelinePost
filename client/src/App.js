@@ -13,6 +13,7 @@ import RequireAuth from './components/utilityComponents/RequireAuth';
 
 // This is a simple comment in the App.js file
 // This is another comment
+// This is also another commit
 
 function App() {
 
